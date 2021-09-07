@@ -17,7 +17,6 @@ rgb_lcd lcd;
 TemperatureSensor temperatureSensor(A0);
 RotationSensor rotationSensor(A1, RotationSensor::INCREMENT_CW);
 LightSensor lightSensor(A2);
-CircularBuffer<float> circularBuffer(100);
 Relay relay(13);
 
 
@@ -34,8 +33,7 @@ void setup()
 
 void loop()
 {
-    circularBuffer.push_back(temperatureSensor.sense());
-    float currTemperature = circularBuffer.getMean();
+    float currTemperature = temperatureSensor.sense();
     float setPoint = getSetpoint();
     float deadbandSize = 2.0;
     float minThreshold = setPoint - deadbandSize/2;
